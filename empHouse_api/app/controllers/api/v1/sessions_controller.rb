@@ -1,4 +1,4 @@
-class Api::V1::SessionController < ApplicationController
+class Api::V1::SessionsController < ApplicationController
 
     def create
         employee = Employee.find_by(email: params[:email])
@@ -9,8 +9,8 @@ class Api::V1::SessionController < ApplicationController
                 render json: { id: employee.id, employee_name: employee.first_name }
             else
                 render(
-                    json: { status: 404 },
-                    status: 404
+                    json: { status: 500,msg:"not Authorized" },
+                    status: 500
                 )
             end
         else

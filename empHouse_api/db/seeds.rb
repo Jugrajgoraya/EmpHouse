@@ -26,7 +26,9 @@ supervisor = Employee.create(
         first_name: first_name,
         last_name: last_name,
         email: "#{first_name}@#{last_name}.com",
-        password: PASSWORD
+        password: PASSWORD,
+        mhe_license: [true,false].sample,
+        avg_rating: [1,2,3,4].sample
     )
 end
 

@@ -43,9 +43,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_024512) do
     t.boolean "is_supervisor", default: false
     t.boolean "mhe_license"
     t.integer "avg_rating", default: 1
-    t.boolean "is_free", default: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "status", default: "signed_out"
+    t.datetime "sign_in_at"
+    t.datetime "sign_out_at"
   end
 
   create_table "shift_assignments", force: :cascade do |t|

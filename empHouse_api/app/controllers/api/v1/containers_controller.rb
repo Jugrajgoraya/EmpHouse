@@ -6,10 +6,17 @@ class Api::V1::ContainersController < ApplicationController
         containers = Container.all.order(due_date: :asc)
         render(json: containers)
     end
-
+    def due
+        containers = Container.all.where(status: "due").order(due_date: :asc)
+        render(json: containers)
+    end
+    def done
+        containers = Container.all.where(status: "done").order(due_date: :asc)
+        render(json: containers)
+    end
     # -------------> can be part of shift show <------------------
-    # def done_containers
-    #     containers = Container.all.where(status: "done").order(due_date: :asc)
+    # def added_containers
+    #     containers = Container.all.where(status: "added").order(due_date: :asc)
     #     render(json: containers)        
     # end
     # def working_containers
@@ -34,66 +41,67 @@ class Api::V1::ContainersController < ApplicationController
         render(json: @container)
     end
 
-    def update
-        if @container.update(container_params)
-            render json: {id: @container.id }
+    def add_employees
+        container = Container.find params[:container_id]
+        employee = Employee.find params[:empId]
+        workingEmployees = []
+        if container.employees.push(employee)
+            employee.update(status: "added")
+            addedEmployees = Employee.all.where(status:"added")
+            render(json: {addedEmployees: addedEmployees})
         else
-            render(
-                json: { errors: @container.errors.messages },
+            render(json: { errors: container.errors.messages},
                 status: 422
             )
-        end        
+        end     
     end
+    # def update
+    #     if @container.update(container_params)
+    #         render json: {id: @container.id }
+    #     else
+    #         render(
+    #             json: { errors: @container.errors.messages },
+    #             status: 422
+    #         )
+    #     end        
+    # end
 
     # to change the status field to 'working' or 'done' accordingly
-    def update_status_working
-        if @container.update(status: "working", started_at: Date.now())
-
-            @container.employee_ids.each{ |eID| 
-                Employee.find(eID).update(is_free: false)
-            }
-            shift = Shift.find params[:shift_id]
-            employees = []
-            containers = []
-            shift.employee_ids.each{ |eID| 
-                e = Employee.find eID
-                employees.push(e)
-            }
-            shift.container_ids.each{ |cID| 
-                c = Container.find cID
-                containers.push(c)
-            }
-            render( json: {shift: shift, employees: employees, containers: containers})
-       else
-           render(
-               json: { errors: @container.errors.messages },
-               status: 422
-           )
-       end
-   end
-    def update_status_done
-         if @container.update(status: "done", end_at: Date.now())
-
-            @container.employee_ids.each{ |eID| 
-                Employee.find(eID).update(is_free: true)
-            }
-            shift = Shift.find params[:shift_id]
-            employees = []
-            containers = []
-            shift.employee_ids.each{ |eID| 
-                e = Employee.find eID
-                employees.push(e)
-            }
-            shift.container_ids.each{ |cID| 
-                c = Container.find cID
-                containers.push(c)
-            }
-            render( json: {shift: shift, employees: employees, containers: containers})
+    def start_container
+        container = Container.find params[:container_id]
+        if container.employees.count > 0
+            if container.update(status: "working", started_at: Time.now.strftime("%I:%M%p"))
+    
+                container.employee_ids.each{ |eID| 
+                    Employee.find(eID).update(status: "working")
+                }
+                render( json: container)
+           else
+               render(
+                   json: { errors: container.errors.messages },
+                   status: 422
+               )
+           end
         else
-            render(
-                json: { errors: @container.errors.messages },
-                status: 422
-            )
+            render(json: {status: 500,msg: "no employee assigned to container" })
+        end
+   end
+    def finish_container
+        container = Container.find params[:container_id]
+        if container.status === "working" && container.started_at != nil
+            if container.update(status: "done", end_at: Time.now.strftime("%I:%M%p"))
+                container.employee_ids.each{ |eID| 
+                    Employee.find(eID).update(status: "signed_in")
+                }
+                render( json: container)
+            else
+                render(
+                    json: { errors: container.errors.messages },
+                    status: 422
+                )
+            end
+        else
+            render(json: {status: 500,msg: "container is not started" })
         end
     end
 

@@ -2,11 +2,22 @@ class Api::V1::EmployeesController < ApplicationController
 
     before_action :find_employee, only: [:show, :update]
 
+    def current
+        render json: current_supervisor
+    end
     def index
-        employees = Employee.all.order(avg_rating: :desc)
+        emps = Employee.all.where(is_supervisor: "false").order(avg_rating: :desc)
+        employees = []
+        emps.each{ |e| 
+            containers = e.containers
+            employees.push({e:e, containers: containers})
+        }
         render(json: employees)
     end
-
+    def signed_out
+        employees = Employee.all.where(is_supervisor: "false",status: "signed_out").order(avg_rating: :desc)
+        render(json: employees)
+    end
     # -------------> can be part of shift show <------------------
     # def free_employees
     #     employees = Employee.all.where(is_free: true).order(avg_raitng: :desc)
@@ -30,48 +41,49 @@ class Api::V1::EmployeesController < ApplicationController
         end      
     end
     def show
-        
         render(json: @employee)
     end
-    def update
-        if @employee.update(employee_params)
-            render json: {id: @employee.id }
-        else
-            render(
-                json: { errors: @employee.errors.messages },
-                status: 422
-            )
-        end        
-    end
+    # def update
+    #     if @employee.update(employee_params)
+    #         render json: {id: @employee.id }
+    #     else
+    #         render(
+    #             json: { errors: @employee.errors.messages },
+    #             status: 422
+    #         )
+    #     end        
+    # end
     def update_rating
-        employee = Employee.find params[:id]
+        employee = Employee.find params[:employee_id]
         new_rating = params[:rating]
         previous_rating = employee.avg_rating
         avg_rating = (previous_rating + new_rating)/2
-        employee.update(avg_rating: avg_rating)
-    end
-
-    # to change the is_free field to 'true' or 'false' accordingly
-    def update_make_free
-         if @employee.update(is_free: true)
-            render json: {id: @employee.id }
-        else
-            render(
-                json: { errors: @employee.errors.messages },
-                status: 422
-            )
+        if employee.update(avg_rating: avg_rating)
+            render(json: {status: 200})
         end
     end
-    def update_make_working
-        if @employee.update(is_free: false)
-           render json: {id: @employee.id }
-       else
-           render(
-               json: { errors: @employee.errors.messages },
-               status: 422
-           )
-       end
-   end
+
+    # to change the status field to 'sign_in' or 'working' accordingly
+    # def update_make_free
+    #      if @employee.update(status: "free")
+    #         render json: {id: @employee.id }
+    #     else
+    #         render(
+    #             json: { errors: @employee.errors.messages },
+    #             status: 422
+    #         )
+    #     end
+    # end
+#     def update_make_working
+#         if @employee.update(status: "working")
+#            render json: {id: @employee.id }
+#        else
+#            render(
+#                json: { errors: @employee.errors.messages },
+#                status: 422
+#            )
+#        end
+#    end
 
     private
 
