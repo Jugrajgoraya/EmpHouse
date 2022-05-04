@@ -1,4 +1,5 @@
 import React,{useEffect,useState} from 'react'
+import { Link } from 'react-router-dom'
 import { Shift } from '../requests'
 // import {Link} from 'react-router-dom'
 
@@ -19,9 +20,9 @@ return (
           shifts.map((e,i)=>{
               return (
                   <div className='m-2 '>
-                      <div className='m-3 nav-link fs-1 text-dark bg-white shadow rounded' key={e.id}>
+                      <Link to={`/shifts/${e.id}`} className='m-3 nav-link fs-1 text-dark bg-white shadow rounded' key={e.id}>
                           {e.location} {" "}{e.sub_time} ({e.date} )  
-                      </div>
+                      </Link>
                   </div>
               )
           })

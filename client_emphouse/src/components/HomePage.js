@@ -21,7 +21,7 @@ function HomePage() {
             currentShifts.map((e,i)=>{
                 return (
                     <div className='m-2 shadow rounded bg-white'>
-                        <Link className='m-3 nav-link fs-1 text-dark' to={`/shifts/${e.id}`} key={e.id}>
+                        <Link className='m-3 nav-link fs-1 text-dark' to={`/current_shifts/${e.id}`} key={e.id}>
                             {e.location} {" "}{e.sub_time} ({e.date} )  
                         </Link>
                     </div>

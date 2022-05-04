@@ -5,13 +5,14 @@ import { useEffect,useState } from 'react';
 import {BrowserRouter, Routes, Route,Link} from 'react-router-dom'
 import HomePage from './components/HomePage'
 import SignInPage from './components/SignInPage';
-import ShiftShowPage from './components/ShiftShowPage';
+import CurrentShiftShowPage from './components/CurrentShiftShowPage';
 import PageNotFound from './components/PageNotFound';
 import ShiftIndexPage from './components/ShiftIndexPage';
 import EmployeeIndexPage from './components/EmployeeIndexPage';
 import ShiftFinalizationPage from './components/ShiftFinalizationPage';
 import ShiftNewPage from './components/ShiftNewPage';
 import { Employee, Session } from './requests';
+import ShiftShowPage from './components/ShiftShowPage';
 
 function App() {
 
@@ -52,7 +53,8 @@ function App() {
         <Route path="/sign_in" element ={<SignInPage/>}/>
         <Route path="/shifts" element ={<ShiftIndexPage/>}/>
         <Route path="/shifts/new" element ={<ShiftNewPage/>}/>
-        <Route path="/shifts/:id" element ={<ShiftShowPage/>}/>
+        <Route path="shifts/:id" element={<ShiftShowPage/>}/>
+        <Route path="current_shifts/:id" element ={<CurrentShiftShowPage/>}/>
         <Route path="/shift_finalization/:id" element={<ShiftFinalizationPage/>}/>
         <Route path="/employees" element ={<EmployeeIndexPage/>}/>        
         <Route path="*" element ={<PageNotFound/>}/>
