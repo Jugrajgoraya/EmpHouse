@@ -112,7 +112,7 @@ function ShiftShowPage() {
                     <ListGroup.Item className='mt-2 shadow'>
                         <div className='row '>
                             <div className='col fw-bold h-100'>
-                                {obj.e.first_name}
+                               id: {obj.e.id} {obj.e.first_name} {obj.e.last_name}
                             </div>
                             <div className='col h-50'>
                                 <RatingShow avg_rating={obj.e.avg_rating}/>
@@ -126,6 +126,7 @@ function ShiftShowPage() {
                                 ""
                             }
                             </div>
+                            <div></div>
                         </div>
                     </ListGroup.Item>
                     )

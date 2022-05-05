@@ -28,6 +28,10 @@
   height: 40px;
   margin-left: 10px;
 }
+.forklift{
+  height: 50px;
+  width: 70px;
+}
 .emp-house{
   text-shadow: 5px 5px #8a8787;
 }

@@ -19,7 +19,7 @@ supervisor = Employee.create(
     mhe_license: true,
     avg_rating: 5
 )
-5.times do
+8.times do
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
     Employee.create(
@@ -52,17 +52,5 @@ end
 employees = Employee.all
 containers = Container.all
 
-Shift.create(
-    date: Faker::Date.between(from: '2022-05-06', to: '2022-05-10'),
-    sub_time: sub_times[rand(0..2)],
-    supervisor: supervisor.full_name,
-    location: 'TJX',
-    comments: Faker::ChuckNorris.fact
-
-)
-
-shifts = Shift.all
-
 puts Cowsay.say("Generated #{employees.count} employees", :koala)
 puts Cowsay.say("Generated #{containers.count} containers", :frogs)
-puts Cowsay.say("Generated #{shifts.count} shifts", :dragon)

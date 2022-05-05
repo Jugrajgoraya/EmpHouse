@@ -39,7 +39,7 @@ function ShiftFinalizationPage() {
     }
     const finalize = ()=>{
         const params = {comments: finalThoughts}
-        Shift.finalize(id).then(shift_id=>{
+        Shift.finalize(id,params).then(shift_id=>{
             console.log(shift_id);
         })
         navigate('/')

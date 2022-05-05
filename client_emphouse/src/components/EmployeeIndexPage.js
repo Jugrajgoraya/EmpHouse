@@ -3,9 +3,12 @@ import {ListGroup} from 'react-bootstrap'
 import {Employee} from '../requests'
 import RatingShow from './RatingShow'
 import Forklift from './Forklift'
+import { useNavigate } from 'react-router-dom'
 
 
-function EmployeeIndexPage() {
+function EmployeeIndexPage(props) {
+
+    const navigate = useNavigate()
 
     const [employeeObjects, setEmployeeObjects] = useState([])
     useEffect(()=>{
@@ -16,14 +19,19 @@ function EmployeeIndexPage() {
         })
         console.log(`employees: ${employeeObjects}`);
     },[])
+
+    const goToShow = (id)=>{
+        navigate(`${id}`)
+    }
+
   return (
-        <ListGroup className='m-3'>
-            <h1 className='header'>My Employees</h1>
+        <ListGroup className='p-3 home-bg-image'>
+            <h1 className='header p-3'>My Employees</h1>
         {employeeObjects
         ?
             employeeObjects.map((obj,i)=>{
                 return (
-                    <ListGroup.Item className='mt-2 shadow'>
+                    <ListGroup.Item onClick={()=>{goToShow(obj.e.id)}} className='mt-2 shadow'>
                         <div className='row'>
                             <div className='col fw-bold'>
                                 {obj.e.first_name}

@@ -27,11 +27,7 @@ class Api::V1::EmployeesController < ApplicationController
     def create
         # employee_params = params.require(:employee).permit(:first_name, :last_name, :email, :password, :password_confirmation)
         employee = Employee.new(employee_params)
-        
         if employee.save
-            if employee.is_supervisor
-                session[:supervisor_id] = employee.id 
-            end
             render json: { id: employee.id }
         else
             render(
@@ -41,7 +37,8 @@ class Api::V1::EmployeesController < ApplicationController
         end      
     end
     def show
-        render(json: @employee)
+        cans = @employee.containers
+        render(json: {employee: @employee, containers: cans})
     end
     # def update
     #     if @employee.update(employee_params)

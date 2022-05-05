@@ -1,6 +1,7 @@
 import React from 'react'
 import MHE from '../MHE.png'
 import {Image} from 'react-bootstrap'
+import '../App.css'
 
 function Forklift(props) {
     const {mhe_license} = props
@@ -9,9 +10,9 @@ function Forklift(props) {
     <div>
         {mhe_license 
         ? 
-            <Image className="w-25 " rounded={true} src={MHE}></Image>
+            <Image className="forklift" rounded={true} src={MHE}></Image>
         :
-            ''
+            <div>No License</div>
         }
     </div>
   )

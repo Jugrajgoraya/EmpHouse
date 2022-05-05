@@ -119,6 +119,9 @@ export const Employee = {
     all(){
         return fetch(`${baseUrl}/employees`).then(res => res.json())
     },
+    show(id){
+        return fetch(`${baseUrl}/employees/${id}`).then(res => res.json())
+    },
     signed_out(){
         return fetch(`${baseUrl}/employees/signed_out`).then(res => res.json())        
     },

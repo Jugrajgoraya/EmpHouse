@@ -1,5 +1,5 @@
 import './App.css';
-import logo from './empHouse.jpeg'
+import logo from './logo.jpeg'
 import {Image} from 'react-bootstrap'
 import { useEffect,useState } from 'react';
 import {BrowserRouter, Routes, Route,Link} from 'react-router-dom'
@@ -13,6 +13,7 @@ import ShiftFinalizationPage from './components/ShiftFinalizationPage';
 import ShiftNewPage from './components/ShiftNewPage';
 import { Employee, Session } from './requests';
 import ShiftShowPage from './components/ShiftShowPage';
+import EmployeeShowPage from './components/EmployeeShowPage';
 
 function App() {
 
@@ -56,7 +57,8 @@ function App() {
         <Route path="shifts/:id" element={<ShiftShowPage/>}/>
         <Route path="current_shifts/:id" element ={<CurrentShiftShowPage/>}/>
         <Route path="/shift_finalization/:id" element={<ShiftFinalizationPage/>}/>
-        <Route path="/employees" element ={<EmployeeIndexPage/>}/>        
+        <Route path="/employees" element ={<EmployeeIndexPage/>}/>
+        <Route path="/employees/:id" element={<EmployeeShowPage/>}/>     
         <Route path="*" element ={<PageNotFound/>}/>
       </Routes>
       <footer className='footer'>@copyright All right reserved</footer>

@@ -3,8 +3,8 @@ import '../App.css'
 
 function RatingShow(props) {
 
-    const filled = Math.floor(props.avg_rating)
-    const empty = 5 - Math.floor(props.avg_rating)
+  const filled = Math.floor(props.avg_rating)
+  const empty = 5 - Math.floor(props.avg_rating)
 
   return (
     <div>
