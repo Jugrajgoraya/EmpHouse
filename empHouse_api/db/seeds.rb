@@ -19,7 +19,7 @@ supervisor = Employee.create(
     mhe_license: true,
     avg_rating: 5
 )
-8.times do
+5.times do
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
     Employee.create(
@@ -49,8 +49,59 @@ sub_times = ['AM','PM','GY']
     )
 end
 
-employees = Employee.all
+allEmployees = Employee.all
 containers = Container.all
 
-puts Cowsay.say("Generated #{employees.count} employees", :koala)
+# 5.times do
+#     Shift.create(
+#         date: Faker::Date.between(from: '2022-05-06', to: '2022-05-10'),
+#         sub_time: sub_times[rand(0..2)],
+#         supervisor: supervisor.full_name,
+#         location: 'YVR',
+#         comments: Faker::ChuckNorris.fact,
+#         status: "finalized"
+#     )
+# end
+
+# ratings = [1,2,3,4,5]
+# shifts = [1,2,3,4,5]
+
+# 5.times{ |i|
+#     ShiftAssignment.create(
+#         shift_id: shifts[i],
+#         employee_id: 2,
+#         rating:ratings.sample
+#     )
+# }
+# 5.times{ |i|
+#     ShiftAssignment.create(
+#         shift_id: shifts[i],
+#         employee_id: 3,
+#         rating:ratings.sample
+#     )
+# }
+# 5.times{ |i|
+#     ShiftAssignment.create(
+#         shift_id: shifts[i],
+#         employee_id: 4,
+#         rating:ratings.sample
+#     )
+# }
+# 5.times{ |i|
+#     ShiftAssignment.create(
+#         shift_id: shifts[i],
+#         employee_id: 5,
+#         rating:ratings.sample
+#     )
+# }
+# 5.times{ |i|
+#     ShiftAssignment.create(
+#         shift_id: shifts[i],
+#         employee_id: 6,
+#         rating:ratings.sample
+#     )
+# }
+
+puts Cowsay.say("Generated #{allEmployees.count} employees", :koala)
 puts Cowsay.say("Generated #{containers.count} containers", :frogs)
+# puts Cowsay.say("Generated #{shifts.count} shifts", :dragon)

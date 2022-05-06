@@ -4,18 +4,21 @@ import {useParams} from 'react-router-dom'
 import { Employee } from '../requests'
 import Forklift from './Forklift'
 import RatingShow from './RatingShow'
+import Chart from './Chart'
 
 function EmployeeShowPage() {
 
     const {id} = useParams()
 
     const [employee, setEmployee] = useState(null)
-    const [employeeContainers, setEmployeeContainers] = useState(null)
+    const [employeeContainers, setEmployeeContainers] = useState([])
+    const [lastWeekRatings, setLastWeekRatings] = useState([])
 
     useEffect(()=>{
         Employee.show(id).then(employeeObject =>{
             setEmployee(employeeObject.employee)
             setEmployeeContainers(employeeObject.containers)
+            setLastWeekRatings(employeeObject.lastWeekRatings)
         })
     },[])
 
@@ -63,7 +66,10 @@ function EmployeeShowPage() {
                         <div className='col m-2'>
                             {employeeContainers.length}
                         </div>
-                    </div>            
+                    </div> 
+                    <div className='rounded border m-3 bg-secondary'>
+                        <Chart ratings={lastWeekRatings}/>
+                    </div>
                 </div>
             </div>
             :

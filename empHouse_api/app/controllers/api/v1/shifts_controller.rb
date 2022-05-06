@@ -6,7 +6,7 @@ class Api::V1::ShiftsController < ApplicationController
     end
     def create
         shift = Shift.new shift_regular_params
-        shift.supervisor = current_supervisor
+        shift.supervisor = current_supervisor.first_name
         if shift.save
             render json: { id: shift.id }
         else

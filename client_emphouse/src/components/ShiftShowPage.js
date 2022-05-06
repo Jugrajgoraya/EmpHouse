@@ -66,7 +66,7 @@ function ShiftShowPage() {
                         <div className='row'>
                             <div className='col fw-bold'>
                                 id: {obj.c.id}
-                            </div>                            
+                            </div>                      
                             <div className='col fw-bold'>
                                 {obj.c.number}
                             </div>
@@ -77,7 +77,7 @@ function ShiftShowPage() {
                                 {obj.c.weight} kgs
                             </div>
                             <div className='col'>
-                                {obj.c.boxes} 
+                                {obj.c.boxes}
                             </div>
                             <div className='col'>
                                 <p>started at : {getTime(obj.c.started_at)}</p>
@@ -126,7 +126,8 @@ function ShiftShowPage() {
                                 ""
                             }
                             </div>
-                            <div></div>
+                            <div>
+                            </div>
                         </div>
                     </ListGroup.Item>
                     )

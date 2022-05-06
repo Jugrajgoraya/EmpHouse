@@ -78,7 +78,6 @@ function CurrentShiftShowPage() {
                 setShiftEmployeeObjects(data.employeeObjects)
             }
         })
-        window.location.reload()
     }
     const removeEmployee = (event)=>{
         event.preventDefault();

@@ -28,7 +28,7 @@ function ShiftFinalizationPage() {
         event.preventDefault();
         const employee_id = event.target.empId.value
         const rating = parseInt(event.target.rating.value)
-        const params = {rating: rating}
+        const params = {rating: rating, shift_id: shift.id}
         Employee.update_rating(employee_id, params).then(data =>{
             console.log(data);
         })
@@ -81,7 +81,7 @@ function ShiftFinalizationPage() {
                             }
                             </div>
                             <div className='col'>
-                                <div className='row'>
+                                {/* <div className='row'>
                                     <p className='col-9 fw-bold'>today's Containers -</p>
                                     <p className='col fw-bolder badge btn-dark'>{obj.containers ? obj.containers.length:""}</p>
                                     
@@ -93,8 +93,8 @@ function ShiftFinalizationPage() {
                                     :
                                     ""
                                     }
-                                </div>
-                            </div>                          
+                                </div> */}
+                            </div>                         
                         </div>
                     </ListGroup.Item>
                     )

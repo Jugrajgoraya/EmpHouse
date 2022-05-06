@@ -38,7 +38,13 @@ class Api::V1::EmployeesController < ApplicationController
     end
     def show
         cans = @employee.containers
-        render(json: {employee: @employee, containers: cans})
+        last_week_shift_ids = @employee.shift_ids.last(5)
+        last_week_ratings = []
+        last_week_shift_ids.each{ |sID|
+            rating = @employee.shift_assignments.find_by(shift_id: sID).rating
+            last_week_ratings.push(rating)
+        }
+        render(json: {employee: @employee, containers: cans, lastWeekRatings: last_week_ratings})
     end
     # def update
     #     if @employee.update(employee_params)
@@ -53,6 +59,8 @@ class Api::V1::EmployeesController < ApplicationController
     def update_rating
         employee = Employee.find params[:employee_id]
         new_rating = params[:rating]
+        
+        employee.shift_assignments.find_by(shift_id: params[:shift_id]).update(rating: new_rating)
         previous_rating = employee.avg_rating
         avg_rating = (previous_rating + new_rating)/2
         if employee.update(avg_rating: avg_rating)

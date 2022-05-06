@@ -1,26 +1,29 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Shift } from '../requests'
 
 function ShiftNewPage(props) {
+
+    let navigate = useNavigate();
 
     const [date, setDate] = useState(null)
     const [shiftType, setShiftType] = useState(null)
     const [location, setLocation] = useState(null)
 
-    const createShift = ()=>{
+    const createShift = (event)=>{
+        event.preventDefault();
         const params = {
             date: date,
             sub_time: shiftType,
             location: location
         }
         Shift.create(params).then(shift => {
-            console.log(shift.id);
-            props.history.push('/')
+            navigate('/')
         })
     }
 
   return (
-    <div className='home-bg-image h-100 w-100'>
+    <div className='home-bg-image h-110 w-100'>
         <div className='p-5 mb-3 d-flex justify-content-center fw-bolder fs-2'>CREATE SHIFT</div>
         <form className='position-absolute top-50 start-50 translate-middle fw-bolder' onSubmit={createShift}>
             <div className='m-1 row'>
